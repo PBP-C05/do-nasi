@@ -1,2 +1,1 @@
-release: sh -c 'python manage.py migrate'
-web: gunicorn project_donasi.wsgi --log-file -
+web: python manage.py migrate && gunicorn project_donasi.wsgi --log-file -
