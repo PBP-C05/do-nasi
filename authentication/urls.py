@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 from .views import login, register, logout, get_user
 
 app_name = 'authentication'
 
 urlpatterns = [
-    url('login_flutter/', login, name='login_flutter'),
-    url('signup_flutter/', register, name='signup_flutter'),
-    url('logout_flutter/', logout, name='logout_flutter'),
-    url('user/', get_user, name='user')
+    path('login_flutter/', login, name='login_flutter'),
+    path('signup_flutter/', register, name='signup_flutter'),
+    path('logout_flutter/', logout, name='logout_flutter'),
+    path('user/', get_user, name='user')
 ]
