@@ -10,6 +10,7 @@ from page_overview.forms import create_form
 from landing_page.models import Pengguna
 from django.views.generic import ListView, DetailView
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 # Create your views here.
 
 @login_required(login_url='/landing_page/login/')
@@ -44,6 +45,8 @@ def add_donasi_ajax(request):
             title = form.cleaned_data['title']
             description = form.cleaned_data['description']
             deadline = form.cleaned_data['deadline']
+            deadline = datetime.strptime(deadline).date()
+            deadline = deadline.strftime("%Y-%m-$d")
             new_task = Donasi.objects.create(title=title, description=description, user=request.user, deadline = deadline)
             data['title'] = title
             data['description'] = description
