@@ -45,8 +45,11 @@ def add_donasi_ajax(request):
             title = form.cleaned_data['title']
             description = form.cleaned_data['description']
             deadline = form.cleaned_data['deadline']
-            deadline = datetime.strptime(deadline).date()
-            deadline = deadline.strftime("%Y-%m-$d")
+            try :
+                deadline = datetime.strptime(deadline, "%Y-%m-$d %H:%M:%S").date()
+                deadline = deadline.strftime("%Y-%m-$d")
+            except :
+                deadline = deadline
             new_task = Donasi.objects.create(title=title, description=description, user=request.user, deadline = deadline)
             data['title'] = title
             data['description'] = description
