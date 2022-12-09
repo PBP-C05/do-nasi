@@ -27,6 +27,7 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('editor/', include('django_summernote.urls')),
     path('questions/', include('questions.urls')),
+    path('auth/', include('authentication.urls')),
 ]
 
 if settings.DEBUG:

@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'article',
     'ckeditor',
     'django_summernote',
+    'authentication',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_CREDENTIALS=True
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
 
 ROOT_URLCONF = 'project_donasi.urls'
 
@@ -152,3 +164,8 @@ for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    'https://do-nasi.up.railway.app'
+]

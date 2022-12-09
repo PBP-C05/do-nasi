@@ -10,8 +10,8 @@
 ```
 
 ### Tautan aplikasi Heroku
-#### 🔗 Links
-[Link deploy](https://do-nasi.herokuapp.com/)
+#### 🔗 Link Deploy
+[https://do-nasi.up.railway.app/](https://do-nasi.up.railway.app/)
 
 ### Cerita aplikasi yang diajukan serta manfaatnya
 Do-nasi adalah aplikasi yang memberikan ruang untuk saling berbagi dan menyalurkan makanan atau uang untuk masyarakat yang membutuhkan dalam rangka memerangi masalah kelaparan di dunia.
