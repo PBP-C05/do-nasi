@@ -9,6 +9,7 @@ from page_overview.models import Donasi
 from page_overview.forms import create_form
 from landing_page.models import Pengguna
 from django.views.generic import ListView, DetailView
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 @login_required(login_url='/landing_page/login/')
@@ -34,6 +35,7 @@ def show_overview(request):
        return redirect('landing_page:login') 
 
 @login_required(login_url='/landing_page/login/')
+@csrf_exempt
 def add_donasi_ajax(request):
     if request.user.is_authenticated:
         form = create_form(request.POST)
@@ -60,6 +62,22 @@ def get_json(request):
     else :
         list = Donasi.objects.all()
         return HttpResponse(serializers.serialize("json", list), content_type="application/json")
+
+def get_json_flutter(request):
+    role = request.user.role
+    response_data = {}
+    if role == "Penyalur":
+        pengguna = Pengguna.objects.get(username = request.user.username)
+        response_data["user"] = json.loads(serializers.serialize("json", [pengguna]))
+        list = Donasi.objects.filter(user = pengguna)
+        response_data['data'] = json.loads(serializers.serialize("json", list))
+        return JsonResponse((response_data))
+    else :
+        pengguna = Pengguna.objects.get(username = request.user.username)
+        response_data["user"] = json.loads(serializers.serialize("json", [pengguna]))
+        list = Donasi.objects.all()
+        response_data['data'] = json.loads(serializers.serialize("json", list))
+        return JsonResponse((response_data))
 
 def do_donation(request, id):
     if request.user.is_authenticated:
