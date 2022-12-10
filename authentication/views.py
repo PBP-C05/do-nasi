@@ -34,20 +34,23 @@ def login(request):
 
 @csrf_exempt
 def register(request):
-    # if (request.method == "POST"):
-    #     try:
-    #         email = request.POST.get("email")
-	# 		username = request.POST.get("username")
-    #         password = request.POST.get("password")
+    if (request.method == "POST"):
+        try:
+            name = request.POST.get("name")
+            email = request.POST.get("email")
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            role = request.POST.get("role")
 
-    #         new_user = User.objects.create_user(email=email, username=username, password=password)
-    #         new_user.save()
-    #         new_user_profile = Pengguna.objects.create(user=new_user)
-    #         return JsonResponse({"instance": "user Dibuat"}, status=200)
+            new_user = Pengguna.objects.create_user(email=email, username=username, password=password)
+            new_user.name = name
+            new_user.role = role
+            new_user.save()
+            return JsonResponse({"instance": "user Dibuat"}, status=200)
         
-    #     except:
-    #         return JsonResponse({"instance": "gagal Dibuat"}, status=400)
-        
+        except:
+            return JsonResponse({"instance": "gagal Dibuat"}, status=400)
+     
     return JsonResponse({"instance": "gagal Dibuat"}, status=400)
 
 
