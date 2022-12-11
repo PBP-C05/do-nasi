@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .models import FAQ, Post, Comment
 
@@ -59,6 +60,7 @@ def get_comments_json(request, id):
     return JsonResponse(data, safe=False)
 
 # AJAX related
+@csrf_exempt
 def add_post(request):
     if request.method == 'POST':
         # retrieving data
