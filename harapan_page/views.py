@@ -6,7 +6,7 @@ from landing_page.models import Pengguna
 from django.contrib import messages
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.utils import timezone
 
 
@@ -60,6 +60,7 @@ def harapan_page(request):
             item.save()
         # HarapanDonatur.objects.all().delete()
             return JsonResponse({'message': 'Harapan Created!', 'error': False})
+    return HttpResponseBadRequest("Bad request")
     """if request.method == 'POST':
         # retrieving data
         pengguna = request.user
