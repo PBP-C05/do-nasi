@@ -46,8 +46,27 @@ def get_article_json(request):
     return JsonResponse(data, safe=False)
 
 def get_comments_json(request):
+    dataa = []
     comments = Comment.objects.all()
-    return HttpResponse(serializers.serialize('json', comments))
+    
+    for item in comments:
+        dataa.append({
+            "pk" : item.pk,
+            "fields" : {
+                "name" : { 
+                        "username" : item.name.username,
+                        "name"     : item.name.name,
+                        "role"     : item.name.role
+                        },
+                "post":{
+                    "pk":item.post.pk
+                },
+                "date_added" : item.date_added,
+                "body" : item.body,
+                
+            }
+        })
+    return JsonResponse(dataa, safe=False)
 
 
 def add_article(request):
@@ -96,11 +115,25 @@ def detail(request,slug):
             post_user = posts
             date_user = datetime.date.today()
             comment_user = request.POST.get('body')
-            new_article = Comment(post=post_user, name= name_user, body=comment_user, date_added = date_user)
-            new_article.save()
+            new_comment = Comment(post=post_user, name= name_user, body=comment_user, date_added = date_user)
+            new_comment.save()
+            return JsonResponse({
+            "pk" : new_comment.pk,
+            "fields" : {
+                "name" : { 
+                        "username" : new_comment.name.username,
+                        "name"     : new_comment.name.name,
+                        "role"     : new_comment.name.role
+                        },
+               
+                "post" : new_comment.post,
+                "date_added" : new_comment.date_added,
+                "body" : new_comment.body,                
+            }
+        })
            
 
-            return redirect('article:detail',slug=posts.slug)
+        return redirect('article:detail',slug=posts.slug)
     context={
         'posts':posts,
         'form' :comment_form,
