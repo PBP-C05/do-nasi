@@ -55,8 +55,9 @@ def harapan_page(request):
             data = json.loads(request.body)
             text = data['text']
         if text is not None:
-            HarapanDonatur.objects.create(
+            item = HarapanDonatur.objects.create(
                 user=user, text=text, username=user, email=user.get_email())
+            item.save()
         # HarapanDonatur.objects.all().delete()
             return JsonResponse({'message': 'Harapan Created!', 'error': False})
     """if request.method == 'POST':
