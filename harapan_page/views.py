@@ -51,16 +51,16 @@ def harapan_page(request):
     if request.method == 'POST':
         user = request.user
         text = request.POST.get('text')
+        HarapanDonatur.objects.all().delete()
         if  text is None:
             data = json.loads(request.body)
             text = data['text']
         if text is not None:
-            item = HarapanDonatur.objects.create(
+            HarapanDonatur.objects.create(
                 user=user, text=text, username=user, email=user.get_email())
-            item.save()
-        # HarapanDonatur.objects.all().delete()
+            
             return JsonResponse({'message': 'Harapan Created!', 'error': False})
-    return HttpResponseBadRequest("Bad request")
+    #return HttpResponseBadRequest("Bad request")
     """if request.method == 'POST':
         # retrieving data
         pengguna = request.user
