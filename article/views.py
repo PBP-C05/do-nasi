@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 
 from article.models import Article, Comment
 def article(request):
@@ -68,7 +68,7 @@ def get_comments_json(request):
         })
     return JsonResponse(dataa, safe=False)
 
-
+@csrf_exempt
 def add_article(request):
     posts = Article.objects.all()
     response_data = {}
@@ -100,6 +100,7 @@ def add_article(request):
 
     return render(request, 'article.html', {'posts':posts})
 
+@csrf_exempt
 @login_required(login_url='../login/')
 def detail(request,slug):
     # posts = Article.objects.get(slug=slug)
