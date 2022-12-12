@@ -127,12 +127,9 @@ def add_comment(request,slug):
                 "body" : new_comment.body,                
             }
         })
-        context={
-        'posts':posts,
-        'form' :comment_form,
-    }
-    return render(request,'detail_article.html',context)
 
+
+@csrf_exempt
 @login_required(login_url='../login/')
 def detail(request,slug):
     # posts = Article.objects.get(slug=slug)
