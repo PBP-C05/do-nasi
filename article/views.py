@@ -100,9 +100,40 @@ def add_article(request):
 
     return render(request, 'article.html', {'posts':posts})
 
+@csrf_exempt
+def add_comment(request,slug):
+    posts = Article.objects.get(slug=slug)
+    if request.method == "POST":
+        form = comment_form(request.POST)
+
+        if form.is_valid():
+            name_user = request.user
+            post_user = posts
+            date_user = datetime.date.today()
+            comment_user = request.POST.get('body')
+            new_comment = Comment(post=post_user, name= name_user, body=comment_user, date_added = date_user)
+            new_comment.save()
+            return JsonResponse({
+            "pk" : new_comment.pk,
+            "fields" : {
+                "name" : { 
+                        "username" : new_comment.name.username,
+                        "name"     : new_comment.name.name,
+                        "role"     : new_comment.name.role
+                        },
+               
+                "post" : new_comment.post,
+                "date_added" : new_comment.date_added,
+                "body" : new_comment.body,                
+            }
+        })
+        context={
+        'posts':posts,
+        'form' :comment_form,
+    }
+    return render(request,'detail_article.html',context)
 
 @login_required(login_url='../login/')
-@csrf_exempt
 def detail(request,slug):
     # posts = Article.objects.get(slug=slug)
     
