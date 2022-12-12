@@ -148,7 +148,6 @@ def detail(request,slug):
             date_user = datetime.date.today()
             comment_user = request.POST.get('body')
             new_comment = Comment(post=post_user, name= name_user, body=comment_user, date_added = date_user)
-            new_comment.save()
             return JsonResponse({
             "pk" : new_comment.pk,
             "fields" : {
