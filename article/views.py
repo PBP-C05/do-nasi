@@ -101,6 +101,7 @@ def add_article(request):
     return render(request, 'article.html', {'posts':posts})
 
 @csrf_exempt
+@login_required
 def add_comment(request,slug):
     posts = Article.objects.get(slug=slug)
     if request.method == "POST":
@@ -127,6 +128,7 @@ def add_comment(request,slug):
                 "body" : new_comment.body,                
             }
         })
+
 
 
 @csrf_exempt
