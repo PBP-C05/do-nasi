@@ -9,7 +9,7 @@ urlpatterns=[
     path('json/article',get_article_json,name='get_article_json'),
     path('add_article/',add_article,name='add_article'),
     path('<slug:slug>/',detail, name='detail'),
-    path('add_comment/',add_comment, name='add_comment'),
+    path('add_comment/<slug:slug>',add_comment, name='add_comment'),
 
     
 ]
