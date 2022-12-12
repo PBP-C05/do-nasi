@@ -101,7 +101,7 @@ def add_article(request):
     return render(request, 'article.html', {'posts':posts})
 
 @csrf_exempt
-@login_required
+@login_required (login_url='../login/')
 def add_comment(request,slug):
     posts = Article.objects.get(slug=slug)
     if request.method == "POST":
@@ -113,7 +113,6 @@ def add_comment(request,slug):
             date_user = datetime.date.today()
             comment_user = request.POST.get('body')
             new_comment = Comment(post=post_user, name= name_user, body=comment_user, date_added = date_user)
-            new_comment.save()
             return JsonResponse({
             "pk" : new_comment.pk,
             "fields" : {
