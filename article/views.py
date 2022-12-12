@@ -100,8 +100,9 @@ def add_article(request):
 
     return render(request, 'article.html', {'posts':posts})
 
-@csrf_exempt
+
 @login_required(login_url='../login/')
+@csrf_exempt
 def detail(request,slug):
     # posts = Article.objects.get(slug=slug)
     
